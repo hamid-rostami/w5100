@@ -10,25 +10,16 @@ IfaceConfig ifcfg;
 Socket server_socket;
 
 /* Hardware deendent SPI functions */
-void w5_sel(void)
-{
-  /* Select W5100 SS pin */
-}
+void w5_sel(void) { /* Select W5100 SS pin */ }
 
-void w5_desel(void)
-{
-  /* Deselect W5100 SS pin */
-}
+void w5_desel(void) { /* Deselect W5100 SS pin */ }
 
-uint8_t w5_xchg(uint8_t tx)
-{
+uint8_t w5_xchg(uint8_t tx) {
   /* Send tx and return received byte from SPI */
   return 0;
 }
 
-
-int main(void)
-{
+int main(void) {
   int ret;
   Socket *client;
   uint8_t buf[255];
@@ -81,22 +72,22 @@ int main(void)
   ret = sock_listen(&server_socket);
 
   /* Main loop to accept new connections */
-  while(1) {
+  while (1) {
     /* Accept new connection */
     client = sock_accept(&server_socket);
     if (client != NULL) {
       /* Here you can send/recieve to/from client */
       ret = sock_read(client, buf, sizeof(buf));
-      if (ret < 0 ) {
-	/* Read error */
-	continue;
+      if (ret < 0) {
+        /* Read error */
+        continue;
       }
       printf("%d bytes received\n", ret);
-      
-      ret = sock_write(client, (uint8_t*)"Hello world!", 12);
+
+      ret = sock_write(client, (uint8_t *)"Hello world!", 12);
       if (ret < 0) {
-	/* Write error */
-	continue;
+        /* Write error */
+        continue;
       }
       printf("%d bytes send\n", ret);
       sock_close(client);

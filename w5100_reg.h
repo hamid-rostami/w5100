@@ -28,11 +28,9 @@
 
 #define W5100_NSOCK 4
 
-
 /* TX and RX buffer base addresses */
 #define W5100_TXBUFADDR 0x4000
 #define W5100_RXBUFADDR 0x6000
-
 
 /* Socket's base register addresses  */
 #define W5100_MR_OFFSET 0x0000
@@ -53,14 +51,12 @@
 #define W5100_RX_RSR_OFFSET 0x0026
 #define W5100_RX_RD_OFFSET 0x0028
 
-
 /* Mode register values  */
 #define W5100_MR_SOFTRST (1 << 7)
 #define W5100_MR_PINGBLK (1 << 4)
 #define W5100_MR_PPPOE (1 << 3)
 #define W5100_MR_AUTOINC (1 << 1)
 #define W5100_MR_INDINT (1 << 0)
-
 
 /* Intrrtupt register values */
 #define W5100_IR_CONFLICT (1 << 7)
@@ -71,7 +67,6 @@
 #define W5100_IR_S1_INT (1 << 3)
 #define W5100_IR_S0_INT (1 << 3)
 
-
 /* Interrupt mask register values */
 #define W5100_IMR_CONFLICT (1 << 7)
 #define W5100_IMR_UNREACH (1 << 6)
@@ -81,13 +76,11 @@
 #define W5100_IMR_S1_INT (1 << 3)
 #define W5100_IMR_S0_INT (1 << 3)
 
-
 /* Socket protocl bits in Mode register */
 #define W5100_SKT_P3 (1 << 3)
 #define W5100_SKT_P2 (1 << 2)
 #define W5100_SKT_P1 (1 << 1)
 #define W5100_SKT_P0 (1 << 0)
-
 
 /* Socket Status register values */
 #define W5100_SKT_SR_CLOSED 0x00
@@ -106,7 +99,6 @@
 #define W5100_SKT_SR_MACRAW 0x42
 #define W5100_SKT_SR_PPPOE 0x5F
 
-
 /* Socket command values for Command register */
 #define W5100_SKT_CR_OPEN 0x01
 #define W5100_SKT_CR_LISTEN 0x02
@@ -117,7 +109,6 @@
 #define W5100_SKT_CR_SEND_MAC 0x21
 #define W5100_SKT_CR_SEND_KEEP 0x22
 #define W5100_SKT_CR_RECV 0x40
-
 
 #define W5100_SKT_MR_CLOSE 0x00
 #define W5100_SKT_MR_TCP 0x01

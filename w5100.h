@@ -2,9 +2,9 @@
 #define _W5100_H_
 
 #include <errno.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdbool.h>
 
 #include "w5100_reg.h"
 
@@ -67,12 +67,11 @@ int w51_init_iface(W51Iface *iface, IfaceConfig *cfg);
 int sock_init(W51Iface *iface, Socket *s);
 int sock_bind(Socket *s, int port);
 int sock_listen(Socket *s);
-Socket* sock_accept(Socket *p);
+Socket *sock_accept(Socket *p);
 int sock_close(Socket *s);
 int sock_read(Socket *s, uint8_t *buf, size_t count);
 int sock_write(Socket *s, uint8_t *buf, size_t count);
 
 bool sock_is_connected(Socket *s);
-
 
 #endif

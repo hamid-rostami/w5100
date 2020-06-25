@@ -27,8 +27,8 @@ static uint16_t read_word(W51Iface *iface, uint16_t addr) {
   return (h << 8) + l;
 }
 
-static void read_block(W51Iface *iface, uint16_t start_addr,
-			   uint16_t count, uint8_t *data) {
+static void read_block(W51Iface *iface, uint16_t start_addr, uint16_t count,
+                       uint8_t *data) {
   for (uint16_t addr = start_addr; addr < (start_addr + count); addr++) {
     *data = read_byte(iface, addr);
     data++;
@@ -60,8 +60,8 @@ static void write_word(W51Iface *iface, uint16_t addr, uint16_t val) {
   write_byte(iface, addr, d);
 }
 
-static void write_block(W51Iface *iface, uint16_t start_addr,
-			uint16_t count, uint8_t *data) {
+static void write_block(W51Iface *iface, uint16_t start_addr, uint16_t count,
+                        uint8_t *data) {
   for (uint16_t addr = start_addr; addr < (start_addr + count); addr++) {
     write_byte(iface, addr, *data);
     data++;
@@ -99,7 +99,7 @@ static void write_sreg_word(Socket *s, uint16_t offset, uint16_t val) {
   addr = W5100_SKT_BASE(s->_fd) + offset;
   write_word(s->_if, addr, val);
 }
-			  
+
 static void reset(W51Iface *iface) {
   /* Will reset via RESET pin */
   if (iface->rst)
@@ -134,9 +134,7 @@ int w51_init_iface(W51Iface *iface, IfaceConfig *cfg) {
   return 0;
 }
 
-SockStatus sock_status(Socket *s) {
-  return read_sreg_byte(s, W5100_SR_OFFSET);
-}
+SockStatus sock_status(Socket *s) { return read_sreg_byte(s, W5100_SR_OFFSET); }
 
 int sock_close(Socket *s) {
   write_sreg_byte(s, W5100_CR_OFFSET, W5100_SKT_CR_CLOSE);
@@ -155,7 +153,7 @@ bool sock_is_connected(Socket *s) {
   return false;
 }
 
-static Socket* get_free_socket(W51Iface *iface) {
+static Socket *get_free_socket(W51Iface *iface) {
   Socket *s = NULL;
   for (int i = 0; i < W5100_NSOCK; i++) {
     /* Get a socket from pool */
@@ -165,8 +163,8 @@ static Socket* get_free_socket(W51Iface *iface) {
     case SockStatus_CLOSEWAIT:
       /* Clsoe the socket */
       if (sock_close(s) != 0)
-	return NULL;
-      /* fallthrough */
+        return NULL;
+    /* fallthrough */
 
     case SockStatus_CLOSED:
       return s;
@@ -198,7 +196,7 @@ int sock_bind(Socket *s, int port) {
     return -1;
 
   /* Get new free socket */
-  if((new = get_free_socket(s->_if)) == NULL)
+  if ((new = get_free_socket(s->_if)) == NULL)
     return -1;
 
   /* Initialize the socket */
@@ -222,8 +220,7 @@ int sock_bind(Socket *s, int port) {
 }
 
 int sock_listen(Socket *s) {
-  if (s->_if == NULL || s->_fd == -1 ||
-      sock_status(s) != SockStatus_INIT)
+  if (s->_if == NULL || s->_fd == -1 || sock_status(s) != SockStatus_INIT)
     return -1;
 
   write_sreg_byte(s, W5100_CR_OFFSET, W5100_SKT_CR_LISTEN);
@@ -234,7 +231,7 @@ int sock_listen(Socket *s) {
   return 0;
 }
 
-Socket* sock_accept(Socket *p) {
+Socket *sock_accept(Socket *p) {
   Socket *out;
 
   /* Check the passive socket, rebind if necessary */
@@ -244,8 +241,8 @@ Socket* sock_accept(Socket *p) {
       return NULL;
     } else {
       if (sock_listen(p) != 0) {
-	/* Listen error */
-	return NULL;
+        /* Listen error */
+        return NULL;
       }
     }
   }
@@ -261,7 +258,6 @@ Socket* sock_accept(Socket *p) {
 
   return out;
 }
-
 
 int sock_read(Socket *s, uint8_t *buf, size_t count) {
   uint16_t sz;
