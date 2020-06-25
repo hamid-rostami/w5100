@@ -1,0 +1,8 @@
+# Emacs autosaves
+*~
+\#*\#
+.\#*
+
+# Object files
+*.o
+*.elf
