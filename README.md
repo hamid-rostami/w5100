@@ -1,6 +1,12 @@
 This library is hardware independent and can be use on any microcontroller
 that can communiate via SPI port (No matter hardware or software SPI).
 
+# Feautures
+* No dynamic memory allocation
+* Non-block design
+* Highly portable
+* Tried to be like POSIX API sockets
+
 # How to use
 
 ## 1. Implement your own SPI functions
