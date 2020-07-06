@@ -199,23 +199,22 @@ int sock_bind(Socket *s, int port) {
   if ((new = get_free_socket(s->_if)) == NULL)
     return -1;
 
-  /* Initialize the socket */
-  s->_sport = port;
-  s->_fd = new->_fd;
-
   /* Set socket port */
-  write_sreg_word(s, W5100_PORT_OFFSET, port);
+  write_sreg_word(new, W5100_PORT_OFFSET, port);
 
   /* Set protocol to TCP */
-  write_sreg_byte(s, W5100_MR_OFFSET, (uint8_t)SockProto_TCP);
+  write_sreg_byte(new, W5100_MR_OFFSET, (uint8_t)SockProto_TCP);
 
   /* Open the socket */
-  write_sreg_byte(s, W5100_CR_OFFSET, W5100_SKT_CR_OPEN);
+  write_sreg_byte(new, W5100_CR_OFFSET, W5100_SKT_CR_OPEN);
 
   /* Check status, should be INIT */
-  if (sock_status(s) != SockStatus_INIT)
+  if (sock_status(new) != SockStatus_INIT)
     return -2;
 
+  /* Assign binded socket */
+  s->_sport = port;
+  s->_fd = new->_fd;
   return 0;
 }
 
